@@ -1,3 +1,3 @@
 # infa_2020_sarseniy
 
-Privet mir!
+Don't read me, please!
