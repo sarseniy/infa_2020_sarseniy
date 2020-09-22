@@ -2,32 +2,39 @@ import pygame
 from pygame.draw import *
 
 def flower(pos, size):
-    ellipse(screen, YELLOW, pygame.Rect(pos[0] + 15 * size, pos[1] + 7 * size, 15 * size, 7 * size))
-    ellipse(screen, WHITE, pygame.Rect(pos[0] + 5 * size, pos[1] + 2 * size, 15 * size, 7 * size))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + 5 * size, pos[1] + 2 * size, 15 * size, 7 * size), 1)
-    ellipse(screen, WHITE, pygame.Rect(pos[0] + 1 * size, pos[1] + 6 * size, 15 * size, 7 * size))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + 1 * size, pos[1] + 6 * size, 15 * size, 7 * size), 1)
-    ellipse(screen, WHITE, pygame.Rect(pos[0] + 5 * size, pos[1] + 10 * size, 15 * size, 7 * size))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + 5 * size, pos[1] + 10 * size, 15 * size, 7 * size), 1)
-    ellipse(screen, WHITE, pygame.Rect(pos[0] + 10 * size, pos[1] + 12 * size, 15 * size, 7 * size))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + 10 * size, pos[1] + 12 * size, 15 * size, 7 * size), 1)
-    ellipse(screen, WHITE, pygame.Rect(pos[0] + 15 * size, pos[1] + 0 * size, 15 * size, 7 * size))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + 15 * size, pos[1] + 0 * size, 15 * size, 7 * size), 1)
-    ellipse(screen, WHITE, pygame.Rect(pos[0] + 23 * size, pos[1] + 3 * size, 15 * size, 7 * size))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + 23 * size, pos[1] + 3 * size, 15 * size, 7 * size), 1)
-    ellipse(screen, WHITE, pygame.Rect(pos[0] + 28 * size, pos[1] + 5 * size, 15 * size, 7 * size))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + 28 * size, pos[1] + 5 * size, 15 * size, 7 * size), 1)
-    ellipse(screen, WHITE, pygame.Rect(pos[0] + 25 * size, pos[1] + 9 * size, 15 * size, 7 * size))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + 25 * size, pos[1] + 9 * size, 15 * size, 7 * size), 1)
-    ellipse(screen, WHITE, pygame.Rect(pos[0] + 20 * size, pos[1] + 13 * size, 15 * size, 7 * size))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + 20 * size, pos[1] + 13 * size, 15 * size, 7 * size), 1)
+    param = [15, 7]
+    param[0] = round(param[0] * size)
+    param[1] = round(param[1] * size)
+    ellipse(screen, YELLOW,
+            pygame.Rect(pos[0] + round(15 * size), pos[1] + round(6 * size), round(18 * size), round(9 * size)))
+    ellipse(screen, WHITE, pygame.Rect(pos[0] + round(5 * size), pos[1] + round(2 * size), param[0], param[1]))
+    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(5 * size), pos[1] + round(2 * size), param[0], param[1]), 1)
+    ellipse(screen, WHITE, pygame.Rect(pos[0] + round(1 * size), pos[1] + round(6 * size), param[0], param[1]))
+    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(1 * size), pos[1] + round(6 * size), param[0], param[1]), 1)
+    ellipse(screen, WHITE, pygame.Rect(pos[0] + round(5 * size), pos[1] + round(10 * size), param[0], param[1]))
+    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(5 * size), pos[1] + round(10 * size), param[0], param[1]), 1)
+    ellipse(screen, WHITE, pygame.Rect(pos[0] + round(10 * size), pos[1] + round(12 * size), param[0], param[1]))
+    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(10 * size), pos[1] + round(12 * size), param[0], param[1]), 1)
+    ellipse(screen, WHITE, pygame.Rect(pos[0] + round(15 * size), pos[1] + round(0 * size), param[0], param[1]))
+    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(15 * size), pos[1] + round(0 * size), param[0], param[1]), 1)
+    ellipse(screen, WHITE, pygame.Rect(pos[0] + round(23 * size), pos[1] + round(3 * size), param[0], param[1]))
+    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(23 * size), pos[1] + round(3 * size), param[0], param[1]), 1)
+    ellipse(screen, WHITE, pygame.Rect(pos[0] + round(28 * size), pos[1] + round(5 * size), param[0], param[1]))
+    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(28 * size), pos[1] + round(5 * size), param[0], param[1]), 1)
+    ellipse(screen, WHITE, pygame.Rect(pos[0] + round(25 * size), pos[1] + round(9 * size), param[0], param[1]))
+    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(25 * size), pos[1] + round(9 * size), param[0], param[1]), 1)
+    ellipse(screen, WHITE, pygame.Rect(pos[0] + round(20 * size), pos[1] + round(13 * size), param[0], param[1]))
+    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(20 * size), pos[1] + round(13 * size), param[0], param[1]), 1)
 
 
-def rotate(img, pos, angle):
-    w, h = img.get_size()
-    img2 = pygame.Surface((w*2, h*2), pygame.SRCALPHA)
-    img2.blit(img, (w-pos[0], h-pos[1]))
-    return pygame.transform.rotate(img2, angle)
+def bush(pos, size):
+    radius = 100
+    circle(screen, L_GREEN, pos, round(radius * size))
+    flower((pos[0] - round(5 * size), pos[1] + round(35 * size)), 1.6 * size)
+    flower((pos[0] - round(70 * size), pos[1] - round(45 * size)), 1.4 * size)
+    flower((pos[0] - round(30 * size), pos[1] - round(20 * size)), 1.2 * size)
+    flower((pos[0] + round(10 * size), pos[1] - round(55 * size)), 1.8 * size)
+    flower((pos[0] - round(75 * size), pos[1] + round(25 * size)), 1.8 * size)
 
 
 RED = (255, 000, 000)
@@ -52,8 +59,10 @@ rect(screen, SKY, (0, 0, 500, 706))
 polygon(screen, GRAY, [(0, 216), (60,73), (104,172), (172,93), (297,282), (389,88), (419,122), (500, 26), (500,706), (0,706)])
 polygon(screen, BLACK, [(0, 216), (60,73), (104,172), (172,93), (297,282), (389,88), (419,122), (500, 26), (500,706), (0,706)], 1)
 
-polygon(screen, B_GREEN, [(0,373), (38,362), (75,359), (114,352), (271,355), (280,414), (294,418), (500,419), (500,706), (0,706)])
-polygon(screen, BLACK, [(0,373), (38,362), (75,359), (114,352), (271,355), (280,414), (294,418), (500,419), (500,706), (0,706)], 1)
+# Создание кустов
+bush((420, 581), 1)
+bush((110, 625), 1.2)
+bush((440, 400), 0.7)
 
 ellipse(screen, WHITE, pygame.Rect(64, 445, 117, 46))
 ellipse(screen, WHITE, pygame.Rect(151, 380, 34, 90))
