@@ -2,34 +2,84 @@ import pygame
 from pygame.draw import *
 
 
-def leg(pos, size):
-    ellipse(screen, WHITE, pygame.Rect(pos[0], pos[1], round(15 * size), round(40 * size)))
-    ellipse(screen, WHITE, pygame.Rect(pos[0], pos[1] + round(33 * size), round(15 * size), round(40 * size)))
-    ellipse(screen, WHITE, pygame.Rect(pos[0], pos[1] + round(68 * size), round(20 * size), round(11 * size)))
+def leg(pos, size, reverse=False):
+    if not reverse:
+        ellipse(screen, WHITE, pygame.Rect(pos[0], pos[1], round(15 * size), round(40 * size)))
+        ellipse(screen, WHITE, pygame.Rect(pos[0], pos[1] + round(33 * size), round(15 * size), round(40 * size)))
+        ellipse(screen, WHITE, pygame.Rect(pos[0], pos[1] + round(68 * size), round(20 * size), round(11 * size)))
+    else:
+        ellipse(screen, WHITE, pygame.Rect(pos[0] - round(15 * size), pos[1], round(15 * size), round(40 * size)))
+        ellipse(screen, WHITE, pygame.Rect(pos[0] - round(15 * size), pos[1] + round(33 * size), round(15 * size),
+                                           round(40 * size)))
+        ellipse(screen, WHITE, pygame.Rect(pos[0] - round(20 * size), pos[1] + round(68 * size), round(20 * size),
+                                           round(11 * size)))
 
 
-def lama(pos, size):
+def draw_lama(pos, size, reverse=False):
+    if not reverse:
+        lama_right(pos, size)
+    else:
+        lama_left(pos, size)
+
+
+def lama_right(pos, size):
+    reverse = False
     pos[0] = round(pos[0] * size)
     pos[1] = round(pos[1] * size)
     ellipse(screen, WHITE, pygame.Rect(pos[0], pos[1], round(117 * size), round(46 * size)))
-    leg((pos[0], pos[1] + round(20 * size)), size)
-    leg((pos[0] + round(25 * size), pos[1] + round(30 * size)), size)
-    leg((pos[0] + round(68 * size), pos[1] + round(20 * size)), size)
-    leg((pos[0] + round(86 * size), pos[1] + round(35 * size)), size)
+
+    leg((pos[0], pos[1] + round(20 * size)), size, reverse)
+    leg((pos[0] + round(25 * size), pos[1] + round(30 * size)), size, reverse)
+    leg((pos[0] + round(68 * size), pos[1] + round(20 * size)), size, reverse)
+    leg((pos[0] + round(86 * size), pos[1] + round(35 * size)), size, reverse)
+
     ellipse(screen, WHITE, pygame.Rect(pos[0] + round(87 * size), pos[1] - round(65 * size), round(34 * size),
                                        round(90 * size)))
     ellipse(screen, WHITE, pygame.Rect(pos[0] + round(93 * size), pos[1] - round((83 * size)), round(41 * size),
                                        round(25 * size)))
+
     circle(screen, PURPLE, (pos[0] + round(112 * size), pos[1] - round(70 * size)), round(8 * size))
     circle(screen, BLACK, (pos[0] + round(115 * size), pos[1] - round(70 * size)), round(4 * size))
     ellipse(screen, WHITE, pygame.Rect(pos[0] + round(106 * size), pos[1] - round(75 * size), round(6 * size),
                                        round(4 * size)))
+
     ear1 = [pos[0] + round(96 * size), pos[1] - round(75 * size)]
-    polygon(screen, WHITE, [ear1, (ear1[0] - round(15 * size), ear1[1] - round(22 * size)), (ear1[0] + round(10 * size),
-                                                                                             ear1[1])])
+    polygon(screen, WHITE, [ear1, (ear1[0] - round(15 * size), ear1[1] - round(22 * size)),
+                            (ear1[0] + round(10 * size), ear1[1])])
     ear2 = [pos[0] + round(108 * size), pos[1] - round(80 * size)]
     polygon(screen, WHITE,
             [ear2, (ear2[0] - round(15 * size), ear2[1] - round(22 * size)), (ear2[0] + round(10 * size), ear2[1])])
+
+
+def lama_left(pos, size):
+    reverse = True
+    pos[0] = round(pos[0] * size)
+    pos[1] = round(pos[1] * size)
+    ellipse(screen, WHITE, pygame.Rect(pos[0] - round(117 * size), pos[1], round(117 * size), round(46 * size)))
+
+    leg((pos[0] - round(120 * size), pos[1] + round(20 * size)), size)
+    leg((pos[0] + round(25 * size) - round(100 * size), pos[1] + round(30 * size)), size, reverse)
+    leg((pos[0] + round(68 * size) - round(100 * size), pos[1] + round(20 * size)), size, reverse)
+    leg((pos[0] + round(86 * size) - round(100 * size), pos[1] + round(35 * size)), size, reverse)
+
+    ellipse(screen, WHITE, pygame.Rect(pos[0] + round(87 * size) - round(220 * size), pos[1] - round(65 * size),
+                                       round(34 * size), round(90 * size)))
+    ellipse(screen, WHITE, pygame.Rect(pos[0] + round(93 * size) - round(240 * size), pos[1] - round((83 * size)),
+                                       round(41 * size), round(25 * size)))
+
+    circle(screen, PURPLE, (pos[0] + round(112 * size) - round(240 * size), pos[1] - round(70 * size)),
+           round(8 * size))
+    circle(screen, BLACK, (pos[0] + round(115 * size) - round(250 * size), pos[1] - round(70 * size)),
+           round(4 * size))
+    ellipse(screen, WHITE, pygame.Rect(pos[0] + round(106 * size) - round(240 * size), pos[1] - round(75 * size),
+                                       round(6 * size), round(4 * size)))
+
+    ear1 = [pos[0] + round(96 * size) - round(230 * size), pos[1] - round(80 * size)]
+    polygon(screen, WHITE, [ear1, (ear1[0] + round(15 * size), ear1[1] - round(22 * size)),
+                            (ear1[0] - round(10 * size), ear1[1])])
+    ear2 = [pos[0] + round(108 * size) - round(230 * size), pos[1] - round(80 * size)]
+    polygon(screen, WHITE,
+            [ear2, (ear2[0] + round(15 * size), ear2[1] - round(22 * size)), (ear2[0] - round(10 * size), ear2[1])])
 
 
 def flower(pos, size):
@@ -108,9 +158,10 @@ bush([440, 400], 0.7)
 
 
 # Drawing lamas
-lama([280, 600], 0.7)
-lama([600, 800], 0.5)
-lama([-80, 190], 3)
+draw_lama([500, 800], 0.7, True)
+draw_lama([600, 1000], 0.4, True)
+draw_lama([600, 800], 0.5)
+draw_lama([-80, 190], 3)
 
 
 pygame.display.update()
