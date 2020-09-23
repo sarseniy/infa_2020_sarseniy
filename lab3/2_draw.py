@@ -6,8 +6,10 @@ pygame.init()
 FPS = 30
 screen = pygame.display.set_mode((400, 400))
 
-x1 = 100; y1 = 100
-x2 = 300; y2 = 200
+x1 = 100
+y1 = 100
+x2 = 300
+y2 = 200
 N = 10
 color = (255, 255, 255)
 rect(screen, color, (x1, y1, x2 - x1, y2 - y1), 2)
