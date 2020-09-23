@@ -85,7 +85,7 @@ pygame.init()
 FPS = 30
 screen = pygame.display.set_mode((500, 706))
 
-# Прорисовка фона
+# Sky and mountains drawing
 rect(screen, SKY, (0, 0, 500, 706))
 
 polygon(screen, GRAY,
@@ -101,10 +101,10 @@ polygon(screen, BLACK,
         [(0, 373), (38, 362), (75, 359), (114, 352), (271, 355), (280, 414), (294, 418), (500, 419), (500, 706),
          (0, 706)], 1)
 
-# Создание кустов
-bush((420, 581), 1)
-bush((110, 625), 1.2)
-bush((440, 400), 0.7)
+# Creating bushes
+bush([420, 581], 1)
+bush([110, 625], 1.2)
+bush([440, 400], 0.7)
 
 
 # Drawing lamas
