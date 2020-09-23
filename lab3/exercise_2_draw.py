@@ -2,6 +2,36 @@ import pygame
 from pygame.draw import *
 
 
+def leg(pos, size):
+    ellipse(screen, WHITE, pygame.Rect(pos[0], pos[1], round(15 * size), round(40 * size)))
+    ellipse(screen, WHITE, pygame.Rect(pos[0], pos[1] + round(33 * size), round(15 * size), round(40 * size)))
+    ellipse(screen, WHITE, pygame.Rect(pos[0], pos[1] + round(68 * size), round(20 * size), round(11 * size)))
+
+
+def lama(pos, size):
+    pos[0] = round(pos[0] * size)
+    pos[1] = round(pos[1] * size)
+    ellipse(screen, WHITE, pygame.Rect(pos[0], pos[1], round(117 * size), round(46 * size)))
+    leg((pos[0], pos[1] + round(20 * size)), size)
+    leg((pos[0] + round(25 * size), pos[1] + round(30 * size)), size)
+    leg((pos[0] + round(68 * size), pos[1] + round(20 * size)), size)
+    leg((pos[0] + round(86 * size), pos[1] + round(35 * size)), size)
+    ellipse(screen, WHITE, pygame.Rect(pos[0] + round(87 * size), pos[1] - round(65 * size), round(34 * size),
+                                       round(90 * size)))
+    ellipse(screen, WHITE, pygame.Rect(pos[0] + round(93 * size), pos[1] - round((83 * size)), round(41 * size),
+                                       round(25 * size)))
+    circle(screen, PURPLE, (pos[0] + round(112 * size), pos[1] - round(70 * size)), round(8 * size))
+    circle(screen, BLACK, (pos[0] + round(115 * size), pos[1] - round(70 * size)), round(4 * size))
+    ellipse(screen, WHITE, pygame.Rect(pos[0] + round(106 * size), pos[1] - round(75 * size), round(6 * size),
+                                       round(4 * size)))
+    ear1 = [pos[0] + round(96 * size), pos[1] - round(75 * size)]
+    polygon(screen, WHITE, [ear1, (ear1[0] - round(15 * size), ear1[1] - round(22 * size)), (ear1[0] + round(10 * size),
+                                                                                             ear1[1])])
+    ear2 = [pos[0] + round(108 * size), pos[1] - round(80 * size)]
+    polygon(screen, WHITE,
+            [ear2, (ear2[0] - round(15 * size), ear2[1] - round(22 * size)), (ear2[0] + round(10 * size), ear2[1])])
+
+
 def flower(pos, size):
     param = [15, 7]
     param[0] = round(param[0] * size)
@@ -77,30 +107,11 @@ bush((110, 625), 1.2)
 bush((440, 400), 0.7)
 
 
-# Прорисовка ламы. Будет переделано в функцию
-ellipse(screen, WHITE, pygame.Rect(64, 445, 117, 46))
-ellipse(screen, WHITE, pygame.Rect(151, 380, 34, 90))
-ellipse(screen, WHITE, pygame.Rect(157, 362, 41, 25))
-circle(screen, PURPLE, (176, 375), 8)
-circle(screen, BLACK, (179, 375), 4)
-ellipse(screen, WHITE, pygame.Rect(170, 370, 6, 4))
-polygon(screen, WHITE, [(160, 370), (145, 348), (170, 370)])
-polygon(screen, WHITE, [(172, 370), (150, 340), (180, 365)])
-ellipse(screen, WHITE, pygame.Rect(70, 462, 15, 40))
-ellipse(screen, WHITE, pygame.Rect(70, 495, 15, 40))
-ellipse(screen, WHITE, pygame.Rect(70, 530, 20, 11))
+# Drawing lamas
+lama([280, 600], 0.7)
+lama([600, 800], 0.5)
+lama([-80, 190], 3)
 
-ellipse(screen, WHITE, pygame.Rect(95, 472, 15, 40))
-ellipse(screen, WHITE, pygame.Rect(95, 505, 15, 40))
-ellipse(screen, WHITE, pygame.Rect(95, 540, 20, 11))
-
-ellipse(screen, WHITE, pygame.Rect(138, 462, 15, 40))
-ellipse(screen, WHITE, pygame.Rect(138, 495, 15, 40))
-ellipse(screen, WHITE, pygame.Rect(138, 530, 20, 11))
-
-ellipse(screen, WHITE, pygame.Rect(156, 477, 15, 40))
-ellipse(screen, WHITE, pygame.Rect(156, 510, 15, 40))
-ellipse(screen, WHITE, pygame.Rect(156, 545, 20, 11))
 
 pygame.display.update()
 clock = pygame.time.Clock()
