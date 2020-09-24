@@ -95,40 +95,121 @@ def lama_left(pos, size):
             [ear2, (ear2[0] + round(15 * size), ear2[1] - round(22 * size)), (ear2[0] - round(10 * size), ear2[1])])
 
 
-def flower(pos, size):
+def draw_flower(pos, size, num):
+    if num == 9:
+        flower_9(pos, size)
+    if num == 8:
+        flower_8(pos, size)
+    if num == 7:
+        flower_7(pos, size)
+    if num == 6:
+        flower_6(pos, size)
+
+
+def flower_9(pos, size):
+    random_color = (randint(0, 255), randint(0, 255), randint(0, 255))
     param = [15, 7]
     param[0] = round(param[0] * size)
     param[1] = round(param[1] * size)
     ellipse(screen, YELLOW,
             pygame.Rect(pos[0] + round(15 * size), pos[1] + round(6 * size), round(18 * size), round(9 * size)))
-    ellipse(screen, WHITE, pygame.Rect(pos[0] + round(5 * size), pos[1] + round(2 * size), param[0], param[1]))
+    ellipse(screen, random_color, pygame.Rect(pos[0] + round(5 * size), pos[1] + round(2 * size), param[0], param[1]))
     ellipse(screen, BLACK, pygame.Rect(pos[0] + round(5 * size), pos[1] + round(2 * size), param[0], param[1]), 1)
-    ellipse(screen, WHITE, pygame.Rect(pos[0] + round(1 * size), pos[1] + round(6 * size), param[0], param[1]))
+    ellipse(screen, random_color, pygame.Rect(pos[0] + round(1 * size), pos[1] + round(6 * size), param[0], param[1]))
     ellipse(screen, BLACK, pygame.Rect(pos[0] + round(1 * size), pos[1] + round(6 * size), param[0], param[1]), 1)
-    ellipse(screen, WHITE, pygame.Rect(pos[0] + round(5 * size), pos[1] + round(10 * size), param[0], param[1]))
+    ellipse(screen, random_color, pygame.Rect(pos[0] + round(5 * size), pos[1] + round(10 * size), param[0], param[1]))
     ellipse(screen, BLACK, pygame.Rect(pos[0] + round(5 * size), pos[1] + round(10 * size), param[0], param[1]), 1)
-    ellipse(screen, WHITE, pygame.Rect(pos[0] + round(10 * size), pos[1] + round(12 * size), param[0], param[1]))
+    ellipse(screen, random_color, pygame.Rect(pos[0] + round(10 * size), pos[1] + round(12 * size), param[0], param[1]))
     ellipse(screen, BLACK, pygame.Rect(pos[0] + round(10 * size), pos[1] + round(12 * size), param[0], param[1]), 1)
-    ellipse(screen, WHITE, pygame.Rect(pos[0] + round(15 * size), pos[1] + round(0 * size), param[0], param[1]))
+    ellipse(screen, random_color, pygame.Rect(pos[0] + round(15 * size), pos[1] + round(0 * size), param[0], param[1]))
     ellipse(screen, BLACK, pygame.Rect(pos[0] + round(15 * size), pos[1] + round(0 * size), param[0], param[1]), 1)
-    ellipse(screen, WHITE, pygame.Rect(pos[0] + round(23 * size), pos[1] + round(3 * size), param[0], param[1]))
+    ellipse(screen, random_color, pygame.Rect(pos[0] + round(23 * size), pos[1] + round(3 * size), param[0], param[1]))
     ellipse(screen, BLACK, pygame.Rect(pos[0] + round(23 * size), pos[1] + round(3 * size), param[0], param[1]), 1)
-    ellipse(screen, WHITE, pygame.Rect(pos[0] + round(28 * size), pos[1] + round(5 * size), param[0], param[1]))
+    ellipse(screen, random_color, pygame.Rect(pos[0] + round(28 * size), pos[1] + round(5 * size), param[0], param[1]))
     ellipse(screen, BLACK, pygame.Rect(pos[0] + round(28 * size), pos[1] + round(5 * size), param[0], param[1]), 1)
-    ellipse(screen, WHITE, pygame.Rect(pos[0] + round(25 * size), pos[1] + round(9 * size), param[0], param[1]))
+    ellipse(screen, random_color, pygame.Rect(pos[0] + round(25 * size), pos[1] + round(9 * size), param[0], param[1]))
     ellipse(screen, BLACK, pygame.Rect(pos[0] + round(25 * size), pos[1] + round(9 * size), param[0], param[1]), 1)
-    ellipse(screen, WHITE, pygame.Rect(pos[0] + round(20 * size), pos[1] + round(13 * size), param[0], param[1]))
+    ellipse(screen, random_color, pygame.Rect(pos[0] + round(20 * size), pos[1] + round(13 * size), param[0], param[1]))
     ellipse(screen, BLACK, pygame.Rect(pos[0] + round(20 * size), pos[1] + round(13 * size), param[0], param[1]), 1)
+
+
+def flower_8(pos, size):
+    random_color = (randint(0, 255), randint(0, 255), randint(0, 255))
+    param = [15, 7]
+    param[0] = round(param[0] * size)
+    param[1] = round(param[1] * size)
+    ellipse(screen, YELLOW,
+            pygame.Rect(pos[0] + round(15 * size), pos[1] + round(6 * size), round(18 * size), round(9 * size)))
+    ellipse(screen, random_color, pygame.Rect(pos[0] + round(5 * size), pos[1] + round(2 * size), param[0], param[1]))
+    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(5 * size), pos[1] + round(2 * size), param[0], param[1]), 1)
+    ellipse(screen, random_color, pygame.Rect(pos[0] + round(1 * size), pos[1] + round(6 * size), param[0], param[1]))
+    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(1 * size), pos[1] + round(6 * size), param[0], param[1]), 1)
+    ellipse(screen, random_color, pygame.Rect(pos[0] + round(5 * size), pos[1] + round(10 * size), param[0], param[1]))
+    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(5 * size), pos[1] + round(10 * size), param[0], param[1]), 1)
+    ellipse(screen, random_color, pygame.Rect(pos[0] + round(15 * size), pos[1] + round(12 * size), param[0], param[1]))
+    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(15 * size), pos[1] + round(12 * size), param[0], param[1]), 1)
+    ellipse(screen, random_color, pygame.Rect(pos[0] + round(15 * size), pos[1] + round(0 * size), param[0], param[1]))
+    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(15 * size), pos[1] + round(0 * size), param[0], param[1]), 1)
+    ellipse(screen, random_color, pygame.Rect(pos[0] + round(23 * size), pos[1] + round(3 * size), param[0], param[1]))
+    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(23 * size), pos[1] + round(3 * size), param[0], param[1]), 1)
+    ellipse(screen, random_color, pygame.Rect(pos[0] + round(28 * size), pos[1] + round(7 * size), param[0], param[1]))
+    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(28 * size), pos[1] + round(7 * size), param[0], param[1]), 1)
+    ellipse(screen, random_color, pygame.Rect(pos[0] + round(25 * size), pos[1] + round(11 * size), param[0], param[1]))
+    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(25 * size), pos[1] + round(11 * size), param[0], param[1]), 1)
+
+
+def flower_7(pos, size):
+    random_color = (randint(0, 255), randint(0, 255), randint(0, 255))
+    param = [15.5, 7.5]
+    param[0] = round(param[0] * size)
+    param[1] = round(param[1] * size)
+    ellipse(screen, YELLOW,
+            pygame.Rect(pos[0] + round(15 * size), pos[1] + round(6 * size), round(18 * size), round(9 * size)))
+    ellipse(screen, random_color, pygame.Rect(pos[0] + round(5 * size), pos[1] + round(2 * size), param[0], param[1]))
+    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(5 * size), pos[1] + round(2 * size), param[0], param[1]), 1)
+    ellipse(screen, random_color, pygame.Rect(pos[0] + round(2 * size), pos[1] + round(8 * size), param[0], param[1]))
+    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(2 * size), pos[1] + round(8 * size), param[0], param[1]), 1)
+    ellipse(screen, random_color, pygame.Rect(pos[0] + round(10 * size), pos[1] + round(13 * size), param[0], param[1]))
+    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(10 * size), pos[1] + round(13 * size), param[0], param[1]), 1)
+    ellipse(screen, random_color, pygame.Rect(pos[0] + round(20 * size), pos[1] + round(12 * size), param[0], param[1]))
+    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(20 * size), pos[1] + round(12 * size), param[0], param[1]), 1)
+    ellipse(screen, random_color, pygame.Rect(pos[0] + round(15 * size), pos[1] + round(0 * size), param[0], param[1]))
+    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(15 * size), pos[1] + round(0 * size), param[0], param[1]), 1)
+    ellipse(screen, random_color, pygame.Rect(pos[0] + round(23 * size), pos[1] + round(3 * size), param[0], param[1]))
+    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(23 * size), pos[1] + round(3 * size), param[0], param[1]), 1)
+    ellipse(screen, random_color, pygame.Rect(pos[0] + round(28 * size), pos[1] + round(7 * size), param[0], param[1]))
+    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(28 * size), pos[1] + round(7 * size), param[0], param[1]), 1)
+
+
+def flower_6(pos, size):
+    random_color = (randint(0, 255), randint(0, 255), randint(0, 255))
+    param = [17, 8]
+    param[0] = round(param[0] * size)
+    param[1] = round(param[1] * size)
+    ellipse(screen, YELLOW,
+            pygame.Rect(pos[0] + round(15 * size), pos[1] + round(6 * size), round(18 * size), round(9 * size)))
+    ellipse(screen, random_color, pygame.Rect(pos[0] + round(5 * size), pos[1] + round(2 * size), param[0], param[1]))
+    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(5 * size), pos[1] + round(2 * size), param[0], param[1]), 1)
+    ellipse(screen, random_color, pygame.Rect(pos[0] + round(2 * size), pos[1] + round(8 * size), param[0], param[1]))
+    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(2 * size), pos[1] + round(8 * size), param[0], param[1]), 1)
+    ellipse(screen, random_color, pygame.Rect(pos[0] + round(10 * size), pos[1] + round(13 * size), param[0], param[1]))
+    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(10 * size), pos[1] + round(13 * size), param[0], param[1]), 1)
+    ellipse(screen, random_color, pygame.Rect(pos[0] + round(20 * size), pos[1] + round(12 * size), param[0], param[1]))
+    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(20 * size), pos[1] + round(12 * size), param[0], param[1]), 1)
+    ellipse(screen, random_color, pygame.Rect(pos[0] + round(17 * size), pos[1] + round(1 * size), param[0], param[1]))
+    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(17 * size), pos[1] + round(1 * size), param[0], param[1]), 1)
+    ellipse(screen, random_color, pygame.Rect(pos[0] + round(25 * size), pos[1] + round(6 * size), param[0], param[1]))
+    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(25 * size), pos[1] + round(6 * size), param[0], param[1]), 1)
 
 
 def bush(pos, size):
     radius = 100
     circle(screen, L_GREEN, pos, round(radius * size))
-    flower((pos[0] - round(5 * size), pos[1] + round(35 * size)), 1.6 * size)
-    flower((pos[0] - round(70 * size), pos[1] - round(45 * size)), 1.4 * size)
-    flower((pos[0] - round(30 * size), pos[1] - round(20 * size)), 1.2 * size)
-    flower((pos[0] + round(10 * size), pos[1] - round(55 * size)), 1.8 * size)
-    flower((pos[0] - round(75 * size), pos[1] + round(25 * size)), 1.8 * size)
+    draw_flower((pos[0] - round(5 * size), pos[1] + round(35 * size)), 1.6 * size, randint(6, 9))
+    draw_flower((pos[0] - round(70 * size), pos[1] - round(45 * size)), 1.4 * size, randint(6, 9))
+    draw_flower((pos[0] - round(30 * size), pos[1] - round(20 * size)), 1.2 * size, randint(6, 9))
+    draw_flower((pos[0] + round(10 * size), pos[1] - round(55 * size)), 1.8 * size, randint(6, 9))
+    draw_flower((pos[0] - round(75 * size), pos[1] + round(25 * size)), 1.8 * size, randint(6, 9))
 
 
 pygame.init()
