@@ -141,136 +141,66 @@ def draw_flower(pos, size, num):
     pos - список из двух целочисленных значений, задающих координаты левого верхнего угла прямоугольника, в который
       вписывается центральный (желтый) эллипс в рисунке цветка
     size - вещественный параметр, служащий коэффициентом относительного размера
-    num - целочисленный параметр, определяющий количество лепестков в цветке (возможные значения - от 6 до 9)
+    num - целочисленный параметр, определяющий количество лепестков в цветках
     '''
+    random_color = (randint(0, 255), randint(0, 255), randint(0, 255))
+    ellipse(screen, YELLOW,
+            pygame.Rect(pos[0] + round(15 * size), pos[1] + round(6 * size), round(18 * size), round(9 * size)))
+
     if num == 9:
-        flower_9(pos, size)
-    if num == 8:
-        flower_8(pos, size)
-    if num == 7:
-        flower_7(pos, size)
-    if num == 6:
-        flower_6(pos, size)
+        param = [15, 7]
+        param[0] = round(param[0] * size)
+        param[1] = round(param[1] * size)
+        flower_list = [ pygame.Rect(pos[0] + round(5 * size), pos[1] + round(2 * size), param[0], param[1]),
+                        pygame.Rect(pos[0] + round(1 * size), pos[1] + round(6 * size), param[0], param[1]),
+                        pygame.Rect(pos[0] + round(5 * size), pos[1] + round(10 * size), param[0], param[1]),
+                        pygame.Rect(pos[0] + round(10 * size), pos[1] + round(12 * size), param[0], param[1]),
+                        pygame.Rect(pos[0] + round(15 * size), pos[1] + round(0 * size), param[0], param[1]),
+                        pygame.Rect(pos[0] + round(23 * size), pos[1] + round(3 * size), param[0], param[1]),
+                        pygame.Rect(pos[0] + round(28 * size), pos[1] + round(5 * size), param[0], param[1]),
+                        pygame.Rect(pos[0] + round(25 * size), pos[1] + round(9 * size), param[0], param[1]),
+                        pygame.Rect(pos[0] + round(20 * size), pos[1] + round(13 * size), param[0], param[1])
+                        ]
+    elif num == 8:
+        param = [15, 7]
+        param[0] = round(param[0] * size)
+        param[1] = round(param[1] * size)
+        flower_list = [ pygame.Rect(pos[0] + round(5 * size), pos[1] + round(2 * size), param[0], param[1]),
+                        pygame.Rect(pos[0] + round(1 * size), pos[1] + round(6 * size), param[0], param[1]),
+                        pygame.Rect(pos[0] + round(5 * size), pos[1] + round(10 * size), param[0], param[1]),
+                        pygame.Rect(pos[0] + round(15 * size), pos[1] + round(12 * size), param[0], param[1]),
+                        pygame.Rect(pos[0] + round(15 * size), pos[1] + round(0 * size), param[0], param[1]),
+                        pygame.Rect(pos[0] + round(23 * size), pos[1] + round(3 * size), param[0], param[1]),
+                        pygame.Rect(pos[0] + round(28 * size), pos[1] + round(7 * size), param[0], param[1]),
+                        pygame.Rect(pos[0] + round(25 * size), pos[1] + round(11 * size), param[0], param[1])
+                        ]
+    elif num == 7:
+        param = [15.5, 7.5]
+        param[0] = round(param[0] * size)
+        param[1] = round(param[1] * size)
+        flower_list = [ pygame.Rect(pos[0] + round(5 * size), pos[1] + round(2 * size), param[0], param[1]),
+                        pygame.Rect(pos[0] + round(2 * size), pos[1] + round(8 * size), param[0], param[1]),
+                        pygame.Rect(pos[0] + round(10 * size), pos[1] + round(13 * size), param[0], param[1]),
+                        pygame.Rect(pos[0] + round(20 * size), pos[1] + round(12 * size), param[0], param[1]),
+                        pygame.Rect(pos[0] + round(15 * size), pos[1] + round(0 * size), param[0], param[1]),
+                        pygame.Rect(pos[0] + round(23 * size), pos[1] + round(3 * size), param[0], param[1]),
+                        pygame.Rect(pos[0] + round(28 * size), pos[1] + round(7 * size), param[0], param[1])
+                        ]
+    elif num == 6:
+        param = [17, 8]
+        param[0] = round(param[0] * size)
+        param[1] = round(param[1] * size)
+        flower_list = [ pygame.Rect(pos[0] + round(5 * size), pos[1] + round(2 * size), param[0], param[1]),
+                        pygame.Rect(pos[0] + round(2 * size), pos[1] + round(8 * size), param[0], param[1]),
+                        pygame.Rect(pos[0] + round(10 * size), pos[1] + round(13 * size), param[0], param[1]),
+                        pygame.Rect(pos[0] + round(20 * size), pos[1] + round(12 * size), param[0], param[1]),
+                        pygame.Rect(pos[0] + round(17 * size), pos[1] + round(1 * size), param[0], param[1]),
+                        pygame.Rect(pos[0] + round(25 * size), pos[1] + round(6 * size), param[0], param[1])
+                        ]
 
-
-def flower_9(pos, size):
-    '''
-    Функция рисует цветок с девятью лепестками.
-    pos - список из двух целочисленных значений, задающих координаты левого верхнего угла прямоугольника, в который
-      вписывается центральный (желтый) эллипс в рисунке цветка
-    size - вещественный параметр, служащий коэффициентом относительного размера
-    '''
-    random_color = (randint(0, 255), randint(0, 255), randint(0, 255))
-    param = [15, 7]
-    param[0] = round(param[0] * size)
-    param[1] = round(param[1] * size)
-    ellipse(screen, YELLOW,
-            pygame.Rect(pos[0] + round(15 * size), pos[1] + round(6 * size), round(18 * size), round(9 * size)))
-    ellipse(screen, random_color, pygame.Rect(pos[0] + round(5 * size), pos[1] + round(2 * size), param[0], param[1]))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(5 * size), pos[1] + round(2 * size), param[0], param[1]), 1)
-    ellipse(screen, random_color, pygame.Rect(pos[0] + round(1 * size), pos[1] + round(6 * size), param[0], param[1]))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(1 * size), pos[1] + round(6 * size), param[0], param[1]), 1)
-    ellipse(screen, random_color, pygame.Rect(pos[0] + round(5 * size), pos[1] + round(10 * size), param[0], param[1]))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(5 * size), pos[1] + round(10 * size), param[0], param[1]), 1)
-    ellipse(screen, random_color, pygame.Rect(pos[0] + round(10 * size), pos[1] + round(12 * size), param[0], param[1]))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(10 * size), pos[1] + round(12 * size), param[0], param[1]), 1)
-    ellipse(screen, random_color, pygame.Rect(pos[0] + round(15 * size), pos[1] + round(0 * size), param[0], param[1]))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(15 * size), pos[1] + round(0 * size), param[0], param[1]), 1)
-    ellipse(screen, random_color, pygame.Rect(pos[0] + round(23 * size), pos[1] + round(3 * size), param[0], param[1]))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(23 * size), pos[1] + round(3 * size), param[0], param[1]), 1)
-    ellipse(screen, random_color, pygame.Rect(pos[0] + round(28 * size), pos[1] + round(5 * size), param[0], param[1]))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(28 * size), pos[1] + round(5 * size), param[0], param[1]), 1)
-    ellipse(screen, random_color, pygame.Rect(pos[0] + round(25 * size), pos[1] + round(9 * size), param[0], param[1]))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(25 * size), pos[1] + round(9 * size), param[0], param[1]), 1)
-    ellipse(screen, random_color, pygame.Rect(pos[0] + round(20 * size), pos[1] + round(13 * size), param[0], param[1]))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(20 * size), pos[1] + round(13 * size), param[0], param[1]), 1)
-
-
-def flower_8(pos, size):
-    '''
-    Функция рисует цветок с восемью лепестками.
-    pos - список из двух целочисленных значений, задающих координаты левого верхнего угла прямоугольника, в который
-      вписывается центральный (желтый) эллипс в рисунке цветка
-    size - вещественный параметр, служащий коэффициентом относительного размера
-    '''
-    random_color = (randint(0, 255), randint(0, 255), randint(0, 255))
-    param = [15, 7]
-    param[0] = round(param[0] * size)
-    param[1] = round(param[1] * size)
-    ellipse(screen, YELLOW,
-            pygame.Rect(pos[0] + round(15 * size), pos[1] + round(6 * size), round(18 * size), round(9 * size)))
-    ellipse(screen, random_color, pygame.Rect(pos[0] + round(5 * size), pos[1] + round(2 * size), param[0], param[1]))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(5 * size), pos[1] + round(2 * size), param[0], param[1]), 1)
-    ellipse(screen, random_color, pygame.Rect(pos[0] + round(1 * size), pos[1] + round(6 * size), param[0], param[1]))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(1 * size), pos[1] + round(6 * size), param[0], param[1]), 1)
-    ellipse(screen, random_color, pygame.Rect(pos[0] + round(5 * size), pos[1] + round(10 * size), param[0], param[1]))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(5 * size), pos[1] + round(10 * size), param[0], param[1]), 1)
-    ellipse(screen, random_color, pygame.Rect(pos[0] + round(15 * size), pos[1] + round(12 * size), param[0], param[1]))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(15 * size), pos[1] + round(12 * size), param[0], param[1]), 1)
-    ellipse(screen, random_color, pygame.Rect(pos[0] + round(15 * size), pos[1] + round(0 * size), param[0], param[1]))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(15 * size), pos[1] + round(0 * size), param[0], param[1]), 1)
-    ellipse(screen, random_color, pygame.Rect(pos[0] + round(23 * size), pos[1] + round(3 * size), param[0], param[1]))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(23 * size), pos[1] + round(3 * size), param[0], param[1]), 1)
-    ellipse(screen, random_color, pygame.Rect(pos[0] + round(28 * size), pos[1] + round(7 * size), param[0], param[1]))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(28 * size), pos[1] + round(7 * size), param[0], param[1]), 1)
-    ellipse(screen, random_color, pygame.Rect(pos[0] + round(25 * size), pos[1] + round(11 * size), param[0], param[1]))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(25 * size), pos[1] + round(11 * size), param[0], param[1]), 1)
-
-
-def flower_7(pos, size):
-    '''
-    Функция рисует цветок с семью лепестками.
-    pos - список из двух целочисленных значений, задающих координаты левого верхнего угла прямоугольника, в который
-      вписывается центральный (желтый) эллипс в рисунке цветка
-    size - вещественный параметр, служащий коэффициентом относительного размера
-    '''
-    random_color = (randint(0, 255), randint(0, 255), randint(0, 255))
-    param = [15.5, 7.5]
-    param[0] = round(param[0] * size)
-    param[1] = round(param[1] * size)
-    ellipse(screen, YELLOW,
-            pygame.Rect(pos[0] + round(15 * size), pos[1] + round(6 * size), round(18 * size), round(9 * size)))
-    ellipse(screen, random_color, pygame.Rect(pos[0] + round(5 * size), pos[1] + round(2 * size), param[0], param[1]))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(5 * size), pos[1] + round(2 * size), param[0], param[1]), 1)
-    ellipse(screen, random_color, pygame.Rect(pos[0] + round(2 * size), pos[1] + round(8 * size), param[0], param[1]))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(2 * size), pos[1] + round(8 * size), param[0], param[1]), 1)
-    ellipse(screen, random_color, pygame.Rect(pos[0] + round(10 * size), pos[1] + round(13 * size), param[0], param[1]))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(10 * size), pos[1] + round(13 * size), param[0], param[1]), 1)
-    ellipse(screen, random_color, pygame.Rect(pos[0] + round(20 * size), pos[1] + round(12 * size), param[0], param[1]))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(20 * size), pos[1] + round(12 * size), param[0], param[1]), 1)
-    ellipse(screen, random_color, pygame.Rect(pos[0] + round(15 * size), pos[1] + round(0 * size), param[0], param[1]))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(15 * size), pos[1] + round(0 * size), param[0], param[1]), 1)
-    ellipse(screen, random_color, pygame.Rect(pos[0] + round(23 * size), pos[1] + round(3 * size), param[0], param[1]))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(23 * size), pos[1] + round(3 * size), param[0], param[1]), 1)
-    ellipse(screen, random_color, pygame.Rect(pos[0] + round(28 * size), pos[1] + round(7 * size), param[0], param[1]))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(28 * size), pos[1] + round(7 * size), param[0], param[1]), 1)
-
-
-def flower_6(pos, size):
-    '''
-    Функция рисует цветок с шестью лепестками.
-    pos - список из двух целочисленных значений, задающих координаты левого верхнего угла прямоугольника, в который
-      вписывается центральный (желтый) эллипс в рисунке цветка
-    size - вещественный параметр, служащий коэффициентом относительного размера
-    '''
-    random_color = (randint(0, 255), randint(0, 255), randint(0, 255))
-    param = [17, 8]
-    param[0] = round(param[0] * size)
-    param[1] = round(param[1] * size)
-    ellipse(screen, YELLOW,
-            pygame.Rect(pos[0] + round(15 * size), pos[1] + round(6 * size), round(18 * size), round(9 * size)))
-    ellipse(screen, random_color, pygame.Rect(pos[0] + round(5 * size), pos[1] + round(2 * size), param[0], param[1]))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(5 * size), pos[1] + round(2 * size), param[0], param[1]), 1)
-    ellipse(screen, random_color, pygame.Rect(pos[0] + round(2 * size), pos[1] + round(8 * size), param[0], param[1]))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(2 * size), pos[1] + round(8 * size), param[0], param[1]), 1)
-    ellipse(screen, random_color, pygame.Rect(pos[0] + round(10 * size), pos[1] + round(13 * size), param[0], param[1]))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(10 * size), pos[1] + round(13 * size), param[0], param[1]), 1)
-    ellipse(screen, random_color, pygame.Rect(pos[0] + round(20 * size), pos[1] + round(12 * size), param[0], param[1]))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(20 * size), pos[1] + round(12 * size), param[0], param[1]), 1)
-    ellipse(screen, random_color, pygame.Rect(pos[0] + round(17 * size), pos[1] + round(1 * size), param[0], param[1]))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(17 * size), pos[1] + round(1 * size), param[0], param[1]), 1)
-    ellipse(screen, random_color, pygame.Rect(pos[0] + round(25 * size), pos[1] + round(6 * size), param[0], param[1]))
-    ellipse(screen, BLACK, pygame.Rect(pos[0] + round(25 * size), pos[1] + round(6 * size), param[0], param[1]), 1)
+    for i in flower_list:
+        ellipse(screen, random_color, i)
+        ellipse(screen, BLACK, i, 1)
 
 def bush(pos, size):
     '''
@@ -304,29 +234,25 @@ screen = pygame.display.set_mode((width, height))
 screen.fill(SKY)
 
 # Рисование ландшафта
-mountains = [
-            (0, 216), (60, 73), (104, 172), (172, 93), (297, 282), (389, 88), (419, 122), (490, 130), (570, 250),
-            (750, 140), (900, 300), (900, 706), (0, 706)
-            ]
-grass = [
-        (0, 373), (38, 362), (75, 359), (114, 352), (271, 355), (280, 414), (294, 418), (900, 419), (900, 706),
+mountains = [ (0, 216), (60, 73), (104, 172), (172, 93), (297, 282), (389, 88), (419, 122), (490, 130), (570, 250),
+              (750, 140), (900, 300), (900, 706), (0, 706)
+              ]
+grass = [ (0, 373), (38, 362), (75, 359), (114, 352), (271, 355), (280, 414), (294, 418), (900, 419), (900, 706),
         (0, 706)
-        ]
+          ]
 landskape(mountains, grass)
 
 # Рисование кустов
-bush_list = [
-            ([420, 581], 0.7), ([650, 530], 0.5),  ([110, 625], 0.8), ([110, 625], 1.4), ([440, 400], 0.7),
+bush_list = [ ([420, 581], 0.7), ([650, 530], 0.5),  ([110, 625], 0.8), ([110, 625], 1.4), ([440, 400], 0.7),
             ([850, 450], 0.7)
-            ]
+              ]
 for i in bush_list:
     bush(*i)
 
 # Рисование лам
-lama_list = [
-            ([500, 800], 0.7, True), ([600, 1000], 0.4, True), ([600, 800], 0.5), ([-80, 190], 3),
-            ([600, 350], 1.5, True), ([800, 550], 0.7), ([900, 850], 0.7, True)
-            ]
+lama_list = [ ([500, 800], 0.7, True), ([600, 1000], 0.4, True), ([600, 800], 0.5), ([-80, 190], 3),
+              ([600, 350], 1.5, True), ([800, 550], 0.7), ([900, 850], 0.7, True)
+              ]
 for i in lama_list:
     draw_lama(*i)
 
