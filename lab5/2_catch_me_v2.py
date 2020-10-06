@@ -189,7 +189,10 @@ while not finished:
 
 pygame.quit()
 
-old_records = open('records', 'r')
+creating = open('records.txt', 'a', encoding='utf-8')
+creating.close()
+
+old_records = open('records.txt', 'r', encoding='utf-8')
 
 names = []
 results = []
@@ -219,7 +222,7 @@ for i in range(len(names)):
             results[i], results[j] = results[j], results[i]
             names[i], names[j] = names[j], names[i]
 
-new_records = open('records', 'w')
+new_records = open('records.txt', 'w', encoding='utf-8')
 
 for i in range(len(names)):
     print(names[i], results[i], file=new_records)
