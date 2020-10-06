@@ -21,6 +21,15 @@ CYAN = (0, 255, 255)
 BLACK = (0, 0, 0)
 COLORS = [RED, BLUE, YELLOW, GREEN, MAGENTA, CYAN]
 
+f1 = pygame.font.SysFont('serif', 150)
+text2 = f1.render("Введите ваше имя", 0, (0, 180, 0))
+screen.blit(text2, (10, 10))
+pygame.display.update()
+new_name = input()
+pygame.time.delay(2000)
+screen.fill(BLACK)
+pygame.display.update()
+
 TYPE = ['CIRCLE', 'SQUARE']
 
 count = 0
@@ -157,6 +166,7 @@ def check_click(event, num):
 
 pygame.display.update()
 clock = pygame.time.Clock()
+
 finished = False
 
 
@@ -174,7 +184,44 @@ while not finished:
                 f = False
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 check_click(event, NUM)
-    pygame.display.update()
     screen.fill(BLACK)
+    pygame.display.update()
 
 pygame.quit()
+
+old_records = open('records', 'r')
+
+names = []
+results = []
+
+for line in old_records:
+    line.rstrip()
+    name, result = line.split(' ')
+    names.append(name)
+    results.append(int(result))
+
+old_records.close()
+
+f = True
+for i in range(len(names)):
+    if names[i] == new_name:
+        f = False
+        if count > results[i]:
+            results[i] = count
+
+if f:
+    names.append(new_name)
+    results.append(count)
+
+for i in range(len(names)):
+    for j in range(i, len(names)):
+        if results[j] > results[i]:
+            results[i], results[j] = results[j], results[i]
+            names[i], names[j] = names[j], names[i]
+
+new_records = open('records', 'w')
+
+for i in range(len(names)):
+    print(names[i], results[i], file=new_records)
+
+new_records.close()
