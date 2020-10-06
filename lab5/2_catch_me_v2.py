@@ -21,6 +21,8 @@ CYAN = (0, 255, 255)
 BLACK = (0, 0, 0)
 COLORS = [RED, BLUE, YELLOW, GREEN, MAGENTA, CYAN]
 
+TYPE = ['CIRCLE', 'SQUARE']
+
 count = 0
 
 
@@ -29,22 +31,28 @@ def new_balls(num):
     Функция рисует num мячиков.
     :param num: колличество мячиков
     """
-    global x, y, r, v, alpha, color
+    global x, y, r, v, alpha, color, type
     x = []
     y = []
     r = []
     v = []
     alpha = []
     color = []
+    type = []
     for i in range(num):
         x.append(randint(MAX_R, WIDTH - MAX_R))
         y.append(randint(MAX_R, HEIGHT - MAX_R))
         r.append(randint(MIN_R, MAX_R))
         v.append(randint(10, 500))
+        v[i] = float(v[i])
         alpha.append(randint(0, 360))
         alpha[i] = radians(alpha[i])
         color.append(COLORS[randint(0, 5)])
-        circle(screen, color[i], (x[i], y[i]), r[i])
+        type.append(TYPE[randint(0, 1)])
+        if type[i] == 'CIRCLE':
+            circle(screen, color[i], (x[i], y[i]), r[i])
+        if type[i] == 'SQUARE':
+            rect(screen, color[i], (x[i], y[i], r[i], r[i]))
 
 
 def move_balls(num):
@@ -52,12 +60,24 @@ def move_balls(num):
     Функция отвечает за передвижение мячиков по экрану.
     :param num: коллическтво мячиков
     """
-    global x, y, r, v, alpha, color
+    global x, y, r, v, alpha, color, alpha
     for i in range(num):
-        circle(screen, BLACK, (x[i], y[i]), r[i])
-        x[i] += round(v[i] / FPS * cos(alpha[i]))
-        y[i] -= round(v[i] / FPS * sin(alpha[i]))
-        circle(screen, color[i], (x[i], y[i]), r[i])
+        if type[i] == 'CIRCLE':
+            circle(screen, BLACK, (x[i], y[i]), r[i])
+        if type[i] == 'SQUARE':
+            rect(screen, BLACK, (x[i], y[i], r[i], r[i]))
+        '''x[i] += round(v[i] / FPS * cos(alpha[i]))
+        y[i] -= round(v[i] / FPS * sin(alpha[i]))'''
+        if type[i] == 'CIRCLE':
+            x[i] += round(v[i] / FPS * cos(alpha[i]))
+            y[i] -= round(v[i] / FPS * sin(alpha[i]))
+            circle(screen, color[i], (x[i], y[i]), r[i])
+        if type[i] == 'SQUARE':
+            v[i] *= randint(90, 110) / 100
+            alpha[i] += radians(randint(0, 10) - 5)
+            x[i] += round(v[i] / FPS * cos(alpha[i]))
+            y[i] -= round(v[i] / FPS * sin(alpha[i]))
+            rect(screen, color[i], (x[i], y[i], r[i], r[i]))
         pygame.display.update()
     check_walls(num)
 
@@ -69,15 +89,45 @@ def check_walls(num):
     """
     global x, y, r, alpha
     for i in range(num):
-        if x[i] + r[i] > WIDTH - 10:
-            alpha[i] = radians(90 + randint(10, 170))
-        if x[i] - r[i] < 0 + 10:
-            alpha[i] = radians(randint(10, 170) - 90)
-        if y[i] + r[i] > HEIGHT - 10:
-            alpha[i] = radians(randint(10, 170))
-        if y[i] - r[i] < 0 + 10:
-            alpha[i] = radians(randint(10, 170) - 180)
+        if type[i] == 'CIRCLE':
+            if x[i] + r[i] > WIDTH - 10:
+                alpha[i] = radians(90 + randint(10, 170))
+            if x[i] - r[i] < 0 + 10:
+                alpha[i] = radians(randint(10, 170) - 90)
+            if y[i] + r[i] > HEIGHT - 10:
+                alpha[i] = radians(randint(10, 170))
+            if y[i] - r[i] < 0 + 10:
+                alpha[i] = radians(randint(10, 170) - 180)
+        if type[i] == 'SQUARE':
+            if x[i] + r[i] > WIDTH - 10:
+                alpha[i] = radians(90 + randint(10, 170))
+            if x[i] < 0 + 10:
+                alpha[i] = radians(randint(10, 170) - 90)
+            if y[i] + r[i] > HEIGHT - 10:
+                alpha[i] = radians(randint(10, 170))
+            if y[i] < 0 + 10:
+                alpha[i] = radians(randint(10, 170) - 180)
         alpha[i] %= 2 * pi
+
+
+def respawn_figure(i):
+    """
+    Функция заново создаёт мишень после попадания в цель.
+    :param i: номер "возрождаемого" элемента
+    """
+    x[i] = randint(MAX_R, WIDTH - MAX_R)
+    y[i] = randint(MAX_R, HEIGHT - MAX_R)
+    r[i] = randint(MIN_R, MAX_R)
+    v[i] = randint(10, 500)
+    alpha[i] = randint(0, 360)
+    alpha[i] = radians(alpha[i])
+    color[i] = COLORS[randint(0, 5)]
+    type[i] = TYPE[randint(0, 1)]
+    if type == 'CIRCLE':
+        circle(screen, color[i], (x[i], y[i]), r[i])
+    if type == 'SQUARE':
+        rect(screen, color[i], (x[i], y[i], r[i], r[i]))
+    pygame.display.update()
 
 
 def check_click(event, num):
@@ -89,22 +139,20 @@ def check_click(event, num):
     global count, x, y, r, v, alpha, color
     coord = event.pos
     for i in range(num):
-        if (x[i] - coord[0]) ** 2 + (y[i] - coord[1]) ** 2 <= r[i] ** 2:
-            count += 1
-            circle(screen, BLACK, (x[i], y[i]), r[i])
+        if type[i] == 'CIRCLE':
+            if (x[i] - coord[0]) ** 2 + (y[i] - coord[1]) ** 2 <= r[i] ** 2:
+                count += 1
+                circle(screen, BLACK, (x[i], y[i]), r[i])
+                print(count)
 
-            x[i] = randint(MAX_R, WIDTH - MAX_R)
-            y[i] = randint(MAX_R, HEIGHT - MAX_R)
-            r[i] = randint(MIN_R, MAX_R)
-            v[i] = randint(10, 500)
-            alpha[i] = randint(0, 360)
-            alpha[i] = radians(alpha[i])
-            color[i] = COLORS[randint(0, 5)]
-            circle(screen, color[i], (x[i], y[i]), r[i])
-            pygame.display.update()
+                respawn_figure(i)
+        if type[i] == 'SQUARE':
+            if 0 <= coord[0] - x[i] <= r[i] and 0 <= coord[1] - y[i] <= r[i]:
+                count += 3
+                rect(screen, BLACK, (x[i], y[i], r[i], r[i]))
+                print(count)
 
-            print(count)
-
+                respawn_figure(i)
 
 
 pygame.display.update()
