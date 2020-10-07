@@ -91,6 +91,23 @@ def move_balls(num):
     check_walls(num)
 
 
+def table(points):
+    """
+    Функция обеспечивает вывод в левый верхний угол экрана таблички с текущим счетом игрока.
+    :param points: текущее колличество очков
+    Функция подсмотрена у https://github.com/Ivan-Ivashkin
+    """
+    rect(screen, GREEN, (0, 0, 150, 40))
+    my_font = pygame.font.Font(None, 50)
+    string = "Счёт: " + str(points)
+    if points < 0:
+        text_color = RED
+    else:
+        text_color = BLACK
+    text = my_font.render(string, 1, text_color)
+    screen.blit(text, (3, 3))
+
+
 def check_walls(num):
     """
     Функция проверяет удар мячика о стенку и считает новый угол
@@ -152,14 +169,12 @@ def check_click(event, num):
             if (x[i] - coord[0]) ** 2 + (y[i] - coord[1]) ** 2 <= r[i] ** 2:
                 count += 1
                 circle(screen, BLACK, (x[i], y[i]), r[i])
-                print(count)
 
                 respawn_figure(i)
         if type[i] == 'SQUARE':
             if 0 <= coord[0] - x[i] <= r[i] and 0 <= coord[1] - y[i] <= r[i]:
                 count += 3
                 rect(screen, BLACK, (x[i], y[i], r[i], r[i]))
-                print(count)
 
                 respawn_figure(i)
 
@@ -178,6 +193,7 @@ while not finished:
     while f:
         clock.tick(FPS)
         move_balls(NUM)
+        table(count)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 finished = True
