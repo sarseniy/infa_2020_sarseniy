@@ -1,0 +1,146 @@
+def zero():
+    t.pendown()
+    t.forward(SIZE)
+    t.left(90)
+    t.forward(2 * SIZE)
+    t.left(90)
+    t.forward(SIZE)
+    t.left(90)
+    t.forward(2 * SIZE)
+    t.left(90)
+    t.penup()
+
+
+def one():
+    t.forward(SIZE)
+    t.pendown()
+    t.left(90)
+    t.forward(2 * SIZE)
+    t.left(135)
+    t.forward(SIZE * 2 ** 0.5)
+    t.penup()
+    t.left(45)
+    t.forward(SIZE)
+    t.left(90)
+
+
+def two():
+    t.pendown()
+    t.forward(SIZE)
+    t.backward(SIZE)
+    t.left(45)
+    t.forward(SIZE * 2 ** 0.5)
+    t.left(45)
+    t.forward(SIZE)
+    t.left(90)
+    t.forward(SIZE)
+    t.penup()
+    t.left(90)
+    t.forward(2 * SIZE)
+    t.left(90)
+
+
+def three():
+    t.pendown()
+    t.left(45)
+    t.forward(DIAG)
+    t.left(135)
+    t.forward(SIZE)
+    t.right(135)
+    t.forward(DIAG)
+    t.left(135)
+    t.forward(SIZE)
+    t.penup()
+    t.left(90)
+    t.forward(2 * SIZE)
+    t.left(90)
+
+
+def four():
+    t.forward(SIZE)
+    t.left(90)
+    t.pendown()
+    t.forward(2 * SIZE)
+    t.backward(SIZE)
+    t.left(90)
+    t.forward(SIZE)
+    t.right(90)
+    t.forward(SIZE)
+    t.penup()
+    t.backward(2 * SIZE)
+    t.right(90)
+
+
+def five():
+    t.pendown()
+    for j in range(2):
+        t.forward(SIZE)
+        t.left(90)
+    for j in range(3):
+        t.forward(SIZE)
+        t.right(90)
+    t.penup()
+    t.forward(2 * SIZE)
+    t.left(90)
+    t.backward(SIZE)
+
+
+def six():
+    t.pendown()
+    for i in range(4):
+        t.forward(SIZE)
+        t.left(90)
+    t.left(90)
+    t.forward(SIZE)
+    t.right(45)
+    t.forward(DIAG)
+    t.backward(DIAG)
+    t.left(45)
+    t.backward(SIZE)
+    t.right(90)
+    t.penup()
+
+
+def seven():
+    t.pendown()
+    t.left(90)
+    t.forward(SIZE)
+    t.right(45)
+    t.forward(DIAG)
+    t.left(135)
+    t.forward(SIZE)
+    t.left(90)
+    t.penup()
+    t.forward(2 * SIZE)
+    t.left(90)
+
+
+def eight():
+    t.pendown()
+    for i in range(4):
+        t.forward(SIZE)
+        t.left(90)
+    t.left(90)
+    t.forward(SIZE)
+    t.right(90)
+    for i in range(4):
+        t.forward(SIZE)
+        t.left(90)
+    t.right(90)
+    t.forward(SIZE)
+    t.left(90)
+    t.penup()
+
+
+def nine():
+    t.pendown()
+    t.left(45)
+    t.forward(DIAG)
+    t.left(45)
+    for i in range(4):
+        t.forward(SIZE)
+        t.left(90)
+    t.right(45)
+    t.backward(DIAG)
+    t.right(45)
+    t.penup()
