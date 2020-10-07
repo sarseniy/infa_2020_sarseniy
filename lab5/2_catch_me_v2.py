@@ -9,7 +9,7 @@ MIN_R = 20
 MAX_R = 100
 WIDTH = 1200
 HEIGHT = 600
-FPS = 30
+FPS = 60
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
 RED = (255, 0, 0)
@@ -75,8 +75,6 @@ def move_balls(num):
             circle(screen, BLACK, (x[i], y[i]), r[i])
         if type[i] == 'SQUARE':
             rect(screen, BLACK, (x[i], y[i], r[i], r[i]))
-        '''x[i] += round(v[i] / FPS * cos(alpha[i]))
-        y[i] -= round(v[i] / FPS * sin(alpha[i]))'''
         if type[i] == 'CIRCLE':
             x[i] += round(v[i] / FPS * cos(alpha[i]))
             y[i] -= round(v[i] / FPS * sin(alpha[i]))
