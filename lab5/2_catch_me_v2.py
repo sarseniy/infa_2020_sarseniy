@@ -1,7 +1,17 @@
+import datetime
 import pygame
 from pygame.draw import *
+from pygame import mixer
 from random import randint
 from math import cos, pi, sin, radians
+from os import path
+
+pygame.mixer.init()
+snd_dir = path.join(path.normpath(path.dirname(__file__)), 'sounds')
+pop_sound1 = pygame.mixer.Sound(path.join(snd_dir, 'pop1.wav'))
+pop_sound2 = pygame.mixer.Sound(path.join(snd_dir, 'pop2.wav'))
+pop_sound3 = pygame.mixer.Sound(path.join(snd_dir, 'pop3.wav'))
+
 pygame.init()
 
 NUM = 3
@@ -20,7 +30,16 @@ MAGENTA = (255, 0, 255)
 CYAN = (0, 255, 255)
 BLACK = (0, 0, 0)
 COLORS = [RED, BLUE, YELLOW, GREEN, MAGENTA, CYAN]
+TYPE = ['CIRCLE', 'SQUARE']
 
+
+mixer.init()
+music_dir = path.join(path.normpath(path.dirname(__file__)), 'sounds')
+mixer.music.load(path.join(music_dir, 'background.mp3'))
+mixer.music.set_volume(0.2)
+mixer.music.play(loops=50)
+
+count = 0
 f1 = pygame.font.SysFont('serif', 150)
 text2 = f1.render("Введите ваше имя", 0, (0, 180, 0))
 screen.blit(text2, (10, 10))
@@ -28,11 +47,22 @@ pygame.display.update()
 new_name = input()
 pygame.time.delay(2000)
 screen.fill(BLACK)
+
+
 pygame.display.update()
 
-TYPE = ['CIRCLE', 'SQUARE']
 
-count = 0
+def play_sound():
+    """
+    Функция воспроизводит случайный звук при попадании по шарику
+    """
+    i = randint(1, 3)
+    if i == 1:
+        pop_sound1.play()
+    if i == 2:
+        pop_sound2.play()
+    if i == 3:
+        pop_sound3.play()
 
 
 def new_balls(num):
@@ -95,7 +125,7 @@ def table(points):
     :param points: текущее колличество очков
     Функция подсмотрена у https://github.com/Ivan-Ivashkin
     """
-    rect(screen, GREEN, (0, 0, 150, 40))
+    rect(screen, GREEN, (0, 0, 170, 40))
     my_font = pygame.font.Font(None, 50)
     string = "Счёт: " + str(points)
     if points < 0:
@@ -167,13 +197,13 @@ def check_click(event, num):
             if (x[i] - coord[0]) ** 2 + (y[i] - coord[1]) ** 2 <= r[i] ** 2:
                 count += 1
                 circle(screen, BLACK, (x[i], y[i]), r[i])
-
+                play_sound()
                 respawn_figure(i)
         if type[i] == 'SQUARE':
             if 0 <= coord[0] - x[i] <= r[i] and 0 <= coord[1] - y[i] <= r[i]:
                 count += 3
                 rect(screen, BLACK, (x[i], y[i], r[i], r[i]))
-
+                play_sound()
                 respawn_figure(i)
 
 
@@ -212,6 +242,8 @@ names = []
 results = []
 
 for line in old_records:
+    if line == '\n':
+        break
     line.rstrip()
     name, result = line.split(' ')
     names.append(name)
@@ -240,5 +272,9 @@ new_records = open('records.txt', 'w', encoding='utf-8')
 
 for i in range(len(names)):
     print(names[i], results[i], file=new_records)
+print('\n', file=new_records)
+
+today = datetime.datetime.today()
+print('Last updated:', today.strftime("%Y-%m-%d-%H:%M:%S MSK"), file=new_records)
 
 new_records.close()

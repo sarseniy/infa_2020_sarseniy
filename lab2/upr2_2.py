@@ -1,7 +1,7 @@
 import turtle as t
 from turtle import Screen
 screen = Screen()
-SIZE = 30
+SIZE = 50
 DIAG = SIZE * 2 ** 0.5
 
 
