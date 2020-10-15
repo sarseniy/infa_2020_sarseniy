@@ -45,11 +45,33 @@ f1 = pygame.font.SysFont('serif', 150)
 text2 = f1.render("Введите ваше имя", 0, (0, 180, 0))
 screen.blit(text2, (10, 10))
 pygame.display.update()
-new_name = input()
-pygame.time.delay(2000)
+clock = pygame.time.Clock()
+
+f = True
+finished = False
+
+string = ''
+new_name = ''
+while not finished:
+    while f:
+        clock.tick(FPS)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                finished = True
+                f = False
+            if event.type == pygame.KEYDOWN:
+                new_name = string
+                if event.key == pygame.K_RETURN:
+                    f = False
+                    finished = True
+                    break
+                string += event.unicode
+                f = pygame.font.SysFont('serif', 150)
+                text = f.render(string, 0, (200, 0, 0))
+                screen.blit(text, (10, 150))
+                pygame.display.update()
+
 screen.fill(BLACK)
-
-
 pygame.display.update()
 
 DATA = {'x': [], 'y': [], 'r': [], 'v': [], 'alpha': [], 'color': [], 'type': []}
@@ -106,13 +128,13 @@ def table(points):
     """
     rect(screen, GREEN, (0, 0, 170, 40))
     my_font = pygame.font.Font(None, 50)
-    string = "Счёт: " + str(points)
+    score_string = "Счёт: " + str(points)
     if points < 0:
         text_color = RED
     else:
         text_color = BLACK
-    text = my_font.render(string, 1, text_color)
-    screen.blit(text, (3, 3))
+    score_text = my_font.render(score_string, 1, text_color)
+    screen.blit(score_text, (3, 3))
 
 
 def check_walls():
@@ -183,7 +205,6 @@ def check_click(action):
 
 
 pygame.display.update()
-clock = pygame.time.Clock()
 
 finished = False
 
