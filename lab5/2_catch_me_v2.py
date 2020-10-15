@@ -11,6 +11,7 @@ snd_dir = path.join(path.normpath(path.dirname(__file__)), 'sounds')
 pop_sound1 = pygame.mixer.Sound(path.join(snd_dir, 'pop1.wav'))
 pop_sound2 = pygame.mixer.Sound(path.join(snd_dir, 'pop2.wav'))
 pop_sound3 = pygame.mixer.Sound(path.join(snd_dir, 'pop3.wav'))
+SOUNDS = [pop_sound1, pop_sound2, pop_sound3]
 
 pygame.init()
 
@@ -51,18 +52,7 @@ screen.fill(BLACK)
 
 pygame.display.update()
 
-
-def play_sound():
-    """
-    Функция воспроизводит случайный звук при попадании по шарику
-    """
-    i = randint(1, 3)
-    if i == 1:
-        pop_sound1.play()
-    if i == 2:
-        pop_sound2.play()
-    if i == 3:
-        pop_sound3.play()
+DATA = {'x': [], 'y': [], 'r': [], 'v': [], 'alpha': [], 'color': [], 'type': []}
 
 
 def new_balls(num):
@@ -70,53 +60,42 @@ def new_balls(num):
     Функция рисует num мячиков.
     :param num: колличество мячиков
     """
-    global x, y, r, v, alpha, color, type
-    x = []
-    y = []
-    r = []
-    v = []
-    alpha = []
-    color = []
-    type = []
-    for i in range(num):
-        x.append(randint(MAX_R, WIDTH - MAX_R))
-        y.append(randint(MAX_R, HEIGHT - MAX_R))
-        r.append(randint(MIN_R, MAX_R))
-        v.append(randint(10, 500))
-        v[i] = float(v[i])
-        alpha.append(randint(0, 360))
-        alpha[i] = radians(alpha[i])
-        color.append(COLORS[randint(0, 5)])
-        type.append(TYPE[randint(0, 1)])
-        if type[i] == 'CIRCLE':
-            circle(screen, color[i], (x[i], y[i]), r[i])
-        if type[i] == 'SQUARE':
-            rect(screen, color[i], (x[i], y[i], r[i], r[i]))
+    for k in range(num):
+        DATA['x'].append(randint(MAX_R, WIDTH - MAX_R))
+        DATA['y'].append(randint(MAX_R, HEIGHT - MAX_R))
+        DATA['r'].append(randint(MIN_R, MAX_R))
+        DATA['v'].append(randint(10, 500))
+        DATA['v'][k] = float(DATA['v'][k])
+        DATA['alpha'].append(randint(0, 360))
+        DATA['alpha'][k] = radians(DATA['alpha'][k])
+        DATA['color'].append(COLORS[randint(0, 5)])
+        DATA['type'].append(TYPE[randint(0, 1)])
+        if DATA['type'][k] == 'CIRCLE':
+            circle(screen, DATA['color'][k], (DATA['x'][k], DATA['y'][k]), DATA['r'][k])
+        if DATA['type'][k] == 'SQUARE':
+            rect(screen, DATA['color'][k], (DATA['x'][k], DATA['y'][k], DATA['r'][k], DATA['r'][k]))
 
 
-def move_balls(num):
+def move_balls():
     """
     Функция отвечает за передвижение мячиков по экрану.
-    :param num: коллическтво мячиков
     """
-    global x, y, r, v, alpha, color, alpha
-    for i in range(num):
-        if type[i] == 'CIRCLE':
-            circle(screen, BLACK, (x[i], y[i]), r[i])
-        if type[i] == 'SQUARE':
-            rect(screen, BLACK, (x[i], y[i], r[i], r[i]))
-        if type[i] == 'CIRCLE':
-            x[i] += round(v[i] / FPS * cos(alpha[i]))
-            y[i] -= round(v[i] / FPS * sin(alpha[i]))
-            circle(screen, color[i], (x[i], y[i]), r[i])
-        if type[i] == 'SQUARE':
-            v[i] *= randint(90, 110) / 100
-            alpha[i] += radians(randint(0, 10) - 5)
-            x[i] += round(v[i] / FPS * cos(alpha[i]))
-            y[i] -= round(v[i] / FPS * sin(alpha[i]))
-            rect(screen, color[i], (x[i], y[i], r[i], r[i]))
-        pygame.display.update()
-    check_walls(num)
+    for k in range(len(DATA['x'])):
+        if DATA['type'][k] == 'CIRCLE':
+            circle(screen, BLACK, (DATA['x'][k], DATA['y'][k]), DATA['r'][k])
+        if DATA['type'][k] == 'SQUARE':
+            rect(screen, BLACK, (DATA['x'][k], DATA['y'][k], DATA['r'][k], DATA['r'][k]))
+        if DATA['type'][k] == 'CIRCLE':
+            DATA['x'][k] += round(DATA['v'][k] / FPS * cos(DATA['alpha'][k]))
+            DATA['y'][k] -= round(DATA['v'][k] / FPS * sin(DATA['alpha'][k]))
+            circle(screen, DATA['color'][k], (DATA['x'][k], DATA['y'][k]), DATA['r'][k])
+        if DATA['type'][k] == 'SQUARE':
+            DATA['v'][k] *= randint(90, 110) / 100
+            DATA['alpha'][k] += radians(randint(0, 10) - 5)
+            DATA['x'][k] += round(DATA['v'][k] / FPS * cos(DATA['alpha'][k]))
+            DATA['y'][k] -= round(DATA['v'][k] / FPS * sin(DATA['alpha'][k]))
+            rect(screen, DATA['color'][k], (DATA['x'][k], DATA['y'][k], DATA['r'][k], DATA['r'][k]))
+    check_walls()
 
 
 def table(points):
@@ -136,75 +115,71 @@ def table(points):
     screen.blit(text, (3, 3))
 
 
-def check_walls(num):
+def check_walls():
     """
     Функция проверяет удар мячика о стенку и считает новый угол
-    :param num: колличество мячиков
     """
-    global x, y, r, alpha
-    for i in range(num):
-        if type[i] == 'CIRCLE':
-            if x[i] + r[i] > WIDTH - 10:
-                alpha[i] = radians(90 + randint(10, 170))
-            if x[i] - r[i] < 0 + 10:
-                alpha[i] = radians(randint(10, 170) - 90)
-            if y[i] + r[i] > HEIGHT - 10:
-                alpha[i] = radians(randint(10, 170))
-            if y[i] - r[i] < 0 + 10:
-                alpha[i] = radians(randint(10, 170) - 180)
-        if type[i] == 'SQUARE':
-            if x[i] + r[i] > WIDTH - 10:
-                alpha[i] = radians(90 + randint(10, 170))
-            if x[i] < 0 + 10:
-                alpha[i] = radians(randint(10, 170) - 90)
-            if y[i] + r[i] > HEIGHT - 10:
-                alpha[i] = radians(randint(10, 170))
-            if y[i] < 0 + 10:
-                alpha[i] = radians(randint(10, 170) - 180)
-        alpha[i] %= 2 * pi
+    for k in range(len(DATA['x'])):
+        if DATA['type'][k] == 'CIRCLE':
+            if DATA['x'][k] + DATA['r'][k] > WIDTH - 10:
+                DATA['alpha'][k] = radians(90 + randint(10, 170))
+            if DATA['x'][k] - DATA['r'][k] < 0 + 10:
+                DATA['alpha'][k] = radians(randint(10, 170) - 90)
+            if DATA['y'][k] + DATA['r'][k] > HEIGHT - 10:
+                DATA['alpha'][k] = radians(randint(10, 170))
+            if DATA['y'][k] - DATA['r'][k] < 0 + 10:
+                DATA['alpha'][k] = radians(randint(10, 170) - 180)
+        if DATA['type'][k] == 'SQUARE':
+            if DATA['x'][k] + DATA['r'][k] > WIDTH - 10:
+                DATA['alpha'][k] = radians(90 + randint(10, 170))
+            if DATA['x'][k] < 0 + 10:
+                DATA['alpha'][k] = radians(randint(10, 170) - 90)
+            if DATA['y'][k] + DATA['r'][k] > HEIGHT - 10:
+                DATA['alpha'][k] = radians(randint(10, 170))
+            if DATA['y'][k] < 0 + 10:
+                DATA['alpha'][k] = radians(randint(10, 170) - 180)
+        DATA['alpha'][k] %= 2 * pi
 
 
-def respawn_figure(i):
+def respawn_figure(k):
     """
     Функция заново создаёт мишень после попадания в цель.
-    :param i: номер "возрождаемого" элемента
+    :param k: номер "возрождаемого" элемента
     """
-    x[i] = randint(MAX_R, WIDTH - MAX_R)
-    y[i] = randint(MAX_R, HEIGHT - MAX_R)
-    r[i] = randint(MIN_R, MAX_R)
-    v[i] = randint(10, 500)
-    alpha[i] = randint(0, 360)
-    alpha[i] = radians(alpha[i])
-    color[i] = COLORS[randint(0, 5)]
-    type[i] = TYPE[randint(0, 1)]
-    if type == 'CIRCLE':
-        circle(screen, color[i], (x[i], y[i]), r[i])
-    if type == 'SQUARE':
-        rect(screen, color[i], (x[i], y[i], r[i], r[i]))
-    pygame.display.update()
+    DATA['x'][k] = randint(MAX_R, WIDTH - MAX_R)
+    DATA['y'][k] = randint(MAX_R, HEIGHT - MAX_R)
+    DATA['r'][k] = randint(MIN_R, MAX_R)
+    DATA['v'][k] = randint(10, 500)
+    DATA['alpha'][k] = randint(0, 360)
+    DATA['alpha'][k] = radians(DATA['alpha'][k])
+    DATA['color'][k] = COLORS[randint(0, 5)]
+    DATA['type'][k] = TYPE[randint(0, 1)]
+    if DATA['type'][k] == 'CIRCLE':
+        circle(screen, DATA['color'][k], (DATA['x'][k], DATA['y'][k]), DATA['r'][k])
+    if DATA['type'][k] == 'SQUARE':
+        rect(screen, DATA['color'][k], (DATA['x'][k], DATA['y'][k], DATA['r'][k], DATA['r'][k]))
 
 
-def check_click(event, num):
+def check_click(action):
     """
     Функция проверяет, попал ли игрок по мячику, подсчитывает очки и рисует новые мячики при необходимости.
-    :param event: параметры события
-    :param num: колличество мячиков
+    :param action: параметры события
     """
-    global count, x, y, r, v, alpha, color
-    coord = event.pos
-    for i in range(num):
-        if type[i] == 'CIRCLE':
-            if (x[i] - coord[0]) ** 2 + (y[i] - coord[1]) ** 2 <= r[i] ** 2:
+    global count
+    coord = action.pos
+    for k in range(len(DATA['x'])):
+        if DATA['type'][k] == 'CIRCLE':
+            if (DATA['x'][k] - coord[0]) ** 2 + (DATA['y'][k] - coord[1]) ** 2 <= DATA['r'][k] ** 2:
                 count += 1
-                circle(screen, BLACK, (x[i], y[i]), r[i])
-                play_sound()
-                respawn_figure(i)
-        if type[i] == 'SQUARE':
-            if 0 <= coord[0] - x[i] <= r[i] and 0 <= coord[1] - y[i] <= r[i]:
+                circle(screen, BLACK, (DATA['x'][k], DATA['y'][k]), DATA['r'][k])
+                SOUNDS[randint(0, 2)].play()
+                respawn_figure(k)
+        if DATA['type'][k] == 'SQUARE':
+            if 0 <= coord[0] - DATA['x'][k] <= DATA['r'][k] and 0 <= coord[1] - DATA['y'][k] <= DATA['r'][k]:
                 count += 3
-                rect(screen, BLACK, (x[i], y[i], r[i], r[i]))
-                play_sound()
-                respawn_figure(i)
+                rect(screen, BLACK, (DATA['x'][k], DATA['y'][k], DATA['r'][k], DATA['r'][k]))
+                SOUNDS[randint(0, 2)].play()
+                respawn_figure(k)
 
 
 pygame.display.update()
@@ -220,16 +195,15 @@ while not finished:
     f = True
     while f:
         clock.tick(FPS)
-        move_balls(NUM)
+        move_balls()
         table(count)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 finished = True
                 f = False
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                check_click(event, NUM)
-    screen.fill(BLACK)
-    pygame.display.update()
+                check_click(event)
+        pygame.display.update()
 
 pygame.quit()
 
