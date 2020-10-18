@@ -74,7 +74,7 @@ while not finished:
 screen.fill(BLACK)
 pygame.display.update()
 
-DATA = {'x': [], 'y': [], 'r': [], 'v': [], 'alpha': [], 'color': [], 'type': []}
+figures = []
 
 
 def new_balls(num):
@@ -83,40 +83,42 @@ def new_balls(num):
     :param num: колличество мячиков
     """
     for k in range(num):
-        DATA['x'].append(randint(MAX_R, WIDTH - MAX_R))
-        DATA['y'].append(randint(MAX_R, HEIGHT - MAX_R))
-        DATA['r'].append(randint(MIN_R, MAX_R))
-        DATA['v'].append(randint(10, 500))
-        DATA['v'][k] = float(DATA['v'][k])
-        DATA['alpha'].append(randint(0, 360))
-        DATA['alpha'][k] = radians(DATA['alpha'][k])
-        DATA['color'].append(COLORS[randint(0, 5)])
-        DATA['type'].append(TYPE[randint(0, 1)])
-        if DATA['type'][k] == 'CIRCLE':
-            circle(screen, DATA['color'][k], (DATA['x'][k], DATA['y'][k]), DATA['r'][k])
-        if DATA['type'][k] == 'SQUARE':
-            rect(screen, DATA['color'][k], (DATA['x'][k], DATA['y'][k], DATA['r'][k], DATA['r'][k]))
+        x = randint(MAX_R, WIDTH - MAX_R)
+        y = randint(MAX_R, HEIGHT - MAX_R)
+        r = randint(MIN_R, MAX_R)
+        v = randint(10, 500)
+        v = float(v)
+        alpha = randint(0, 360)
+        alpha = radians(alpha)
+        color = COLORS[randint(0, 5)]
+        fig_type = TYPE[randint(0, 1)]
+        figure = {'x': x, 'y': y, 'r': r, 'v': v, 'alpha': alpha, 'color': color, 'fig_type': fig_type}
+        figures.append(figure)
+        if fig_type == 'CIRCLE':
+            circle(screen, color, (x, y), r)
+        if fig_type == 'SQUARE':
+            rect(screen, color, (x, y, r, r))
 
 
 def move_balls():
     """
     Функция отвечает за передвижение мячиков по экрану.
     """
-    for k in range(len(DATA['x'])):
-        if DATA['type'][k] == 'CIRCLE':
-            circle(screen, BLACK, (DATA['x'][k], DATA['y'][k]), DATA['r'][k])
-        if DATA['type'][k] == 'SQUARE':
-            rect(screen, BLACK, (DATA['x'][k], DATA['y'][k], DATA['r'][k], DATA['r'][k]))
-        if DATA['type'][k] == 'CIRCLE':
-            DATA['x'][k] += round(DATA['v'][k] / FPS * cos(DATA['alpha'][k]))
-            DATA['y'][k] -= round(DATA['v'][k] / FPS * sin(DATA['alpha'][k]))
-            circle(screen, DATA['color'][k], (DATA['x'][k], DATA['y'][k]), DATA['r'][k])
-        if DATA['type'][k] == 'SQUARE':
-            DATA['v'][k] *= randint(90, 110) / 100
-            DATA['alpha'][k] += radians(randint(0, 10) - 5)
-            DATA['x'][k] += round(DATA['v'][k] / FPS * cos(DATA['alpha'][k]))
-            DATA['y'][k] -= round(DATA['v'][k] / FPS * sin(DATA['alpha'][k]))
-            rect(screen, DATA['color'][k], (DATA['x'][k], DATA['y'][k], DATA['r'][k], DATA['r'][k]))
+    for fig in figures:
+        if fig['fig_type'] == 'CIRCLE':
+            circle(screen, BLACK, (fig['x'], fig['y']), fig['r'])
+        if fig['fig_type'] == 'SQUARE':
+            rect(screen, BLACK, (fig['x'], fig['y'], fig['r'], fig['r']))
+        if fig['fig_type'] == 'CIRCLE':
+            fig['x'] += round(fig['v'] / FPS * cos(fig['alpha']))
+            fig['y'] -= round(fig['v'] / FPS * sin(fig['alpha']))
+            circle(screen, fig['color'], (fig['x'], fig['y']), fig['r'])
+        if fig['fig_type'] == 'SQUARE':
+            fig['v'] *= randint(90, 110) / 100
+            fig['alpha'] += radians(randint(0, 10) - 5)
+            fig['x'] += round(fig['v'] / FPS * cos(fig['alpha']))
+            fig['y'] -= round(fig['v'] / FPS * sin(fig['alpha']))
+            rect(screen, fig['color'], (fig['x'], fig['y'], fig['r'], fig['r']))
     check_walls()
 
 
@@ -141,26 +143,26 @@ def check_walls():
     """
     Функция проверяет удар мячика о стенку и считает новый угол
     """
-    for k in range(len(DATA['x'])):
-        if DATA['type'][k] == 'CIRCLE':
-            if DATA['x'][k] + DATA['r'][k] > WIDTH - 10:
-                DATA['alpha'][k] = radians(90 + randint(10, 170))
-            if DATA['x'][k] - DATA['r'][k] < 0 + 10:
-                DATA['alpha'][k] = radians(randint(10, 170) - 90)
-            if DATA['y'][k] + DATA['r'][k] > HEIGHT - 10:
-                DATA['alpha'][k] = radians(randint(10, 170))
-            if DATA['y'][k] - DATA['r'][k] < 0 + 10:
-                DATA['alpha'][k] = radians(randint(10, 170) - 180)
-        if DATA['type'][k] == 'SQUARE':
-            if DATA['x'][k] + DATA['r'][k] > WIDTH - 10:
-                DATA['alpha'][k] = radians(90 + randint(10, 170))
-            if DATA['x'][k] < 0 + 10:
-                DATA['alpha'][k] = radians(randint(10, 170) - 90)
-            if DATA['y'][k] + DATA['r'][k] > HEIGHT - 10:
-                DATA['alpha'][k] = radians(randint(10, 170))
-            if DATA['y'][k] < 0 + 10:
-                DATA['alpha'][k] = radians(randint(10, 170) - 180)
-        DATA['alpha'][k] %= 2 * pi
+    for fig in figures:
+        if fig['fig_type'] == 'CIRCLE':
+            if fig['x'] + fig['r'] > WIDTH - 10:
+                fig['alpha'] = radians(90 + randint(10, 170))
+            if fig['x'] - fig['r'] < 0 + 10:
+                fig['alpha'] = radians(randint(10, 170) - 90)
+            if fig['y'] + fig['r'] > HEIGHT - 10:
+                fig['alpha'] = radians(randint(10, 170))
+            if fig['y'] - fig['r'] < 0 + 10:
+                fig['alpha'] = radians(randint(10, 170) - 180)
+        if fig['fig_type'] == 'SQUARE':
+            if fig['x'] + fig['r'] > WIDTH - 10:
+                fig['alpha'] = radians(90 + randint(10, 170))
+            if fig['x'] < 0 + 10:
+                fig['alpha'] = radians(randint(10, 170) - 90)
+            if fig['y'] + fig['r'] > HEIGHT - 10:
+                fig['alpha'] = radians(randint(10, 170))
+            if fig['y'] < 0 + 10:
+                fig['alpha'] = radians(randint(10, 170) - 180)
+        fig['alpha'] %= 2 * pi
 
 
 def respawn_figure(k):
@@ -168,18 +170,19 @@ def respawn_figure(k):
     Функция заново создаёт мишень после попадания в цель.
     :param k: номер "возрождаемого" элемента
     """
-    DATA['x'][k] = randint(MAX_R, WIDTH - MAX_R)
-    DATA['y'][k] = randint(MAX_R, HEIGHT - MAX_R)
-    DATA['r'][k] = randint(MIN_R, MAX_R)
-    DATA['v'][k] = randint(10, 500)
-    DATA['alpha'][k] = randint(0, 360)
-    DATA['alpha'][k] = radians(DATA['alpha'][k])
-    DATA['color'][k] = COLORS[randint(0, 5)]
-    DATA['type'][k] = TYPE[randint(0, 1)]
-    if DATA['type'][k] == 'CIRCLE':
-        circle(screen, DATA['color'][k], (DATA['x'][k], DATA['y'][k]), DATA['r'][k])
-    if DATA['type'][k] == 'SQUARE':
-        rect(screen, DATA['color'][k], (DATA['x'][k], DATA['y'][k], DATA['r'][k], DATA['r'][k]))
+    fig = figures[k]
+    fig['x'] = randint(MAX_R, WIDTH - MAX_R)
+    fig['y'] = randint(MAX_R, HEIGHT - MAX_R)
+    fig['r'] = randint(MIN_R, MAX_R)
+    fig['v'] = randint(10, 500)
+    fig['alpha'] = randint(0, 360)
+    fig['alpha'] = radians(fig['alpha'])
+    fig['color'] = COLORS[randint(0, 5)]
+    fig['fig_type'] = TYPE[randint(0, 1)]
+    if fig['fig_type'] == 'CIRCLE':
+        circle(screen, fig['color'], (fig['x'], fig['y']), fig['r'])
+    if fig['fig_type'] == 'SQUARE':
+        rect(screen, fig['color'], (fig['x'], fig['y'], fig['r'], fig['r']))
 
 
 def check_click(action):
@@ -189,19 +192,19 @@ def check_click(action):
     """
     global count
     coord = action.pos
-    for k in range(len(DATA['x'])):
-        if DATA['type'][k] == 'CIRCLE':
-            if (DATA['x'][k] - coord[0]) ** 2 + (DATA['y'][k] - coord[1]) ** 2 <= DATA['r'][k] ** 2:
+    for fig in figures:
+        if fig['fig_type'] == 'CIRCLE':
+            if (fig['x'] - coord[0]) ** 2 + (fig['y'] - coord[1]) ** 2 <= fig['r'] ** 2:
                 count += 1
-                circle(screen, BLACK, (DATA['x'][k], DATA['y'][k]), DATA['r'][k])
+                circle(screen, BLACK, (fig['x'], fig['y']), fig['r'])
                 SOUNDS[randint(0, 2)].play()
-                respawn_figure(k)
-        if DATA['type'][k] == 'SQUARE':
-            if 0 <= coord[0] - DATA['x'][k] <= DATA['r'][k] and 0 <= coord[1] - DATA['y'][k] <= DATA['r'][k]:
+                respawn_figure(figures.index(fig))
+        if fig['fig_type'] == 'SQUARE':
+            if 0 <= coord[0] - fig['x'] <= fig['r'] and 0 <= coord[1] - fig['y'] <= fig['r']:
                 count += 3
-                rect(screen, BLACK, (DATA['x'][k], DATA['y'][k], DATA['r'][k], DATA['r'][k]))
+                rect(screen, BLACK, (fig['x'], fig['y'], fig['r'], fig['r']))
                 SOUNDS[randint(0, 2)].play()
-                respawn_figure(k)
+                respawn_figure(figures.index(fig))
 
 
 pygame.display.update()
