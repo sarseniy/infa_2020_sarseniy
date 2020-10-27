@@ -65,7 +65,11 @@ while not finished:
                     f = False
                     finished = True
                     break
-                string += event.unicode
+                elif event.key == 8:
+                    string = string[:-1]
+                else:
+                    string += event.unicode
+                rect(screen, BLACK, (10, 150, 1200, 600))
                 f = pygame.font.SysFont('serif', 150)
                 text = f.render(string, 0, (200, 0, 0))
                 screen.blit(text, (10, 150))
