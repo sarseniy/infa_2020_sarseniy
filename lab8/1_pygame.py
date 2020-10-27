@@ -70,6 +70,9 @@ class Projectile:
             circle(screen, self.color, (round(self.x), round(self.y)), self.r)
 
     def move(self):
+        """
+        Метод отвечает за перемещение снаряда в пространстве и за проверку его соударения со стенами
+        """
         if self.y <= 550:
             self.vy -= 1.2
             self.y -= self.vy
@@ -205,21 +208,29 @@ class Target:
             self.move()
             circle(screen, self.color, (self.x, self.y), self.r)
             circle(screen, BLACK, (self.x, self.y), self.r, 1)
-        self.tick()
+        else:
+            self.tick()
 
     def cooldown(self):
+        """
+        Фукция проверяет, находится ли появление мишени на перезарядке
+        @return: логическое значение
+        """
         if self.time > 100:
             return False
         else:
             return True
 
     def tick(self):
+        """
+        Метод отвечает за подсчёт времени до появления новой мишени
+        """
         self.time += 1
 
     @staticmethod
     def hit(points=1):
         """
-        Попадание шарика в цель.
+        Попадание снаряда в цель.
         """
         Target.point += points
 
