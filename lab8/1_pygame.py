@@ -1,7 +1,9 @@
 from random import randrange as rnd, choice
 import math
+from os import path
 import pygame
 from pygame.draw import *
+from pygame import mixer
 
 RED = (255, 0, 0)
 BLUE = (0, 0, 255)
@@ -19,6 +21,14 @@ pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 rect(screen, WHITE, (0, 0, WIDTH, HEIGHT))
 pygame.display.update()
+music_dir = path.join(path.normpath(path.dirname(__file__)), 'sounds')
+
+
+def play_music():
+    mixer.init()
+    mixer.music.load(path.join(music_dir, 'background.mp3'))
+    mixer.music.set_volume(0.2)
+    mixer.music.play(loops=50)
 
 
 def update_score(score):
@@ -34,6 +44,24 @@ def update_score(score):
         text_color = BLACK
     score_text = my_font.render(score_string, 1, text_color)
     screen.blit(score_text, (3, 3))
+
+
+class Sounds:
+    shoot_s = pygame.mixer.Sound(path.join(music_dir, 'shoot.wav'))
+    hit_s = [0, 0, 0]
+    hit_s[0] = pygame.mixer.Sound(path.join(music_dir, 'hit1.wav'))
+    hit_s[1] = pygame.mixer.Sound(path.join(music_dir, 'hit2.wav'))
+    hit_s[2] = pygame.mixer.Sound(path.join(music_dir, 'hit3.wav'))
+
+    @staticmethod
+    def shoot():
+        Sounds.shoot_s.play()
+
+    @staticmethod
+    def hit():
+        Sounds.hit_s[rnd(0, 2, 1)].play()
+
+
 
 
 class Projectile:
@@ -137,6 +165,7 @@ class Gun:
             self.angle = math.atan((y - new_projectile.y) / (x - new_projectile.x))
         except ZeroDivisionError:
             self.angle = 2 * math.pi
+        Sounds.shoot()
         new_projectile.vx = self.power * math.cos(self.angle)
         new_projectile.vy = - self.power * math.sin(self.angle)
         projectile += [new_projectile]
@@ -233,8 +262,10 @@ class Target:
         Попадание снаряда в цель.
         """
         Target.point += points
+        Sounds.hit()
 
 
+play_music()
 g = Gun()
 projectiles = []
 
